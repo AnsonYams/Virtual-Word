@@ -1,0 +1,31 @@
+Methods that stayed in Functions:
+loadImages()
+processImageLine()
+getImages()
+setAlpha()
+load()
+processLine()
+parseBackground()
+parseSapling()
+parseDude()
+parseFairy()
+parseTree()
+parseObstacle()
+parseHouse()
+These functions stayed in the Functions class because they were general methods that did not take in any specific class parameters and
+they are mainly used for setting up and preparing the program rather than actually being used for making the program interactive
+
+Ambiguous methods moved:
+createDudeFull()
+createDudeNotFull()
+createFairy()
+createSapling()
+createStump()
+createTree()
+createObstacle()
+createHouse()
+These methods were ambiguous because they did not take in any specific class as a parameter. They also call the Entity constructor which creates the entity.
+I ended up putting it in WorldModel because it made more sense for the WorldModel to know how to create an entity rather than the entity class creating itself.
+The WorldModel class also holds methods like addEntity() and removeEntity() so it makes sense for it to also hold the createEntities methods.
+
+

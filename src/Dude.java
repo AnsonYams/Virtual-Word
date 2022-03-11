@@ -10,7 +10,7 @@ public abstract class Dude extends Trackers {
 
     protected boolean _nextPosition(WorldModel world, Point p) {
         return world.withinBounds(p) &&
-                (!world.isOccupied(p) || world.getOccupancyCell(p).getClass() == Stump.class || world.getOccupancyCell(p).getClass() == Fire.class);
+                (!world.isOccupied(p) || world.getOccupancyCell(p).getClass() == Stump.class);
     }
 
     protected boolean transformGhost(WorldModel world,

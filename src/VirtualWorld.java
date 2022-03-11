@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Optional;
 
@@ -82,19 +84,21 @@ public final class VirtualWorld extends PApplet
     // Just for debugging and for P5
     public void mousePressed() {
         Point pressed = mouseToPoint(mouseX, mouseY);
-        Point p1 = new Point(pressed.x+1, pressed.y);
-        Point p2 = new Point(pressed.x-1, pressed.y);
-        Point p3 = new Point(pressed.x, pressed.y-1);
-        Point p4 = new Point(pressed.x, pressed.y+1);
-        Point p5 = new Point(pressed.x+1, pressed.y+1);
-        Point p6 = new Point(pressed.x-1, pressed.y-1);
-        Point p7 = new Point(pressed.x+1, pressed.y-1);
-        Point p8 = new Point(pressed.x-1, pressed.y+1);
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(pressed.x+1, pressed.y));
+        points.add(new Point(pressed.x-1, pressed.y));
+        points.add(new Point(pressed.x, pressed.y-1));
+        points.add(new Point(pressed.x, pressed.y+1));
+        points.add(new Point(pressed.x+1, pressed.y+1));
+        points.add(new Point(pressed.x-1, pressed.y-1));
+        points.add(new Point(pressed.x+1, pressed.y+1));
+        points.add(new Point(pressed.x+1, pressed.y-1));
+        points.add(new Point(pressed.x-1, pressed.y+1));
 
-        spreadFre(p1, p2);
-        spreadFre(p3, p4);
-        spreadFre(p5,p6);
-        spreadFre(p7,p8);
+        for (Point p: points) {
+            Fire.spreadFre(world, imageStore, scheduler, p);
+            //world.setBackground();
+        }
 
         Goomab g = Factory.createGoomab(Functions.GOOMAB_KEY, pressed, imageStore.getImageList(Functions.GOOMAB_KEY), 100, 100);
         world.tryAddEntity(g);
@@ -107,16 +111,6 @@ public final class VirtualWorld extends PApplet
             System.out.println(entity.getId() + ": " + entity.getClass());
         }
 
-    }
-
-    public void spreadFre(Point p1, Point p2) {
-        Fire f0= Factory.createFire(Functions.FIRE_KEY,p1,imageStore.getImageList(Functions.FIRE_KEY),100,100);
-        world.tryAddEntity(f0);
-        f0.scheduleActions(scheduler,world,imageStore);
-
-        Fire f1= Factory.createFire(Functions.FIRE_KEY,p2,imageStore.getImageList(Functions.FIRE_KEY),100,100);
-        world.tryAddEntity(f1);
-        f1.scheduleActions(scheduler,world,imageStore);
     }
 
     private Point mouseToPoint(int x, int y)

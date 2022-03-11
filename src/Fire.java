@@ -21,4 +21,9 @@ public class Fire extends Acts{
                 getActionPeriod());
     }
 
+    public static void spreadFre(WorldModel world, ImageStore imageStore, EventScheduler scheduler, Point p) {
+        Fire f0= Factory.createFire(Functions.FIRE_KEY,p,imageStore.getImageList(Functions.FIRE_KEY),100,100);
+        world.tryAddEntity(f0);
+        f0.scheduleActions(scheduler,world,imageStore);
+    }
 }

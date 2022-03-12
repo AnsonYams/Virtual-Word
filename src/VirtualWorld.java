@@ -94,15 +94,18 @@ public final class VirtualWorld extends PApplet
         points.add(new Point(pressed.x+1, pressed.y+1));
         points.add(new Point(pressed.x+1, pressed.y-1));
         points.add(new Point(pressed.x-1, pressed.y+1));
+        world.setBackground(new Point(pressed.x, pressed.y), new Background("yes", imageStore.getImageList("background")));
 
         for (Point p: points) {
             Fire.spreadFre(world, imageStore, scheduler, p);
-            if(world.getOccupancyCell(p).getClass() == DudeNotFull.class || world.getOccupancyCell(p).getClass() == DudeFull.class )
+            if(world.withinBounds(p) && (world.getOccupancyCell(p).getClass() == DudeNotFull.class || world.getOccupancyCell(p).getClass() == DudeFull.class))
             {
                 Dude d = (Dude) world.getOccupancyCell(p);
                 d.transformGhost(world, scheduler, imageStore);
             }
-            //world.setBackground();
+            if (world.withinBounds(p) && world.getOccupancyCell(p).getClass() != Obstacle.class) {
+                world.setBackground(p, new Background("yes", imageStore.getImageList("background")));
+            }
         }
 
         Goomab g = Factory.createGoomab(Functions.GOOMAB_KEY, pressed, imageStore.getImageList(Functions.GOOMAB_KEY), 10, 5);

@@ -16,6 +16,11 @@ public class Fire extends Acts{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
+        double i = Math.random();
+        if (i < 0.05) {
+            world.removeEntity(this);
+            scheduler.unscheduleAllEvents(this);
+        }
         scheduler.scheduleEvent( this,
                 Factory.createActivityAction(this,world, imageStore),
                 getActionPeriod());

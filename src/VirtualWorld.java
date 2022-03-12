@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Optional;
+import java.util.*;
 
 import processing.core.*;
 
@@ -148,9 +145,12 @@ public final class VirtualWorld extends PApplet
         }
 
         if (key == 'p') {
-            Poro p = Factory.createFluffy("Poro", new Point(2,2), imageStore.getImageList("poro"), 1,1);
-            world.addEntity(p);
-            p.scheduleActions(scheduler, world, imageStore);
+            if (!world.findNearest(new Point(0,0), List.of(Poro.class)).isPresent()) {
+                Poro p = Factory.createFluffy("Poro", new Point(2,2), imageStore.getImageList("poro"), 1,1);
+                world.addEntity(p);
+                p.scheduleActions(scheduler, world, imageStore);
+
+            }
         }
     }
 

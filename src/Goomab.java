@@ -30,7 +30,6 @@ public class Goomab extends Trackers{
         if(full.isPresent())
         {
             DudeFull df = (DudeFull) full.get();
-            Point tgtPos = df.getPosition();
             if (moveTo(world, df, scheduler)) {
                 df.transformGhost(world, scheduler, imageStore);
                 world.removeEntity(df);

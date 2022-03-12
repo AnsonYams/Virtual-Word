@@ -95,6 +95,10 @@ public class Factory {
         return new Goomab(id, position, images, actionPeriod, animationPeriod);
     }
 
+    public static Poro createFluffy(String id, Point point, List<PImage> images, int actionPeriod, int animationPeriod) {
+        return new Poro(id, point, images,actionPeriod,animationPeriod);
+    }
+
     public static Animation createAnimationAction(Animates entity, int repeatCount) {
         return new Animation(entity, repeatCount);
     }

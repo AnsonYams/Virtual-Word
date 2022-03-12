@@ -61,6 +61,7 @@ public final class WorldModel
     private final int FIRE_KEY = 1;
     private final int GHOST_KEY = 1;
     private final int GOOMAB_KEY =1;
+    public static final int PORO_KEY = 1;
 
 
     public WorldModel(int numRows, int numCols, Background defaultBackground) {

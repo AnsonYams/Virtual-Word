@@ -249,6 +249,23 @@ public final class Functions
         return properties.length == world.getFAIRY_NUM_PROPERTIES();
     }
 
+    public static boolean parsePoro(
+            String[] properties, WorldModel world, ImageStore imageStore)
+    {
+        if (properties.length == world.getBGND_NUM_PROPERTIES()) {
+            Point pt = new Point(Integer.parseInt(properties[world.getFAIRY_COL()]),
+                    Integer.parseInt(properties[world.getFAIRY_ROW()]));
+            Fairy entity = Factory.createFairy("1",
+                    pt,
+                    Integer.parseInt(properties[world.getFAIRY_ACTION_PERIOD()]),
+                    Integer.parseInt(properties[world.getFAIRY_ANIMATION_PERIOD()]),
+                    imageStore.getImageList( FAIRY_KEY));
+            world.tryAddEntity( entity);
+        }
+
+        return properties.length == world.getFAIRY_NUM_PROPERTIES();
+    }
+
     public static boolean parseTree(
             String[] properties, WorldModel world, ImageStore imageStore)
     {

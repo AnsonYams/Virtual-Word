@@ -146,6 +146,12 @@ public final class VirtualWorld extends PApplet
             }
             view.shiftView(dx, dy);
         }
+
+        if (key == 'p') {
+            Poro p = Factory.createFluffy("Poro", new Point(2,2), imageStore.getImageList("poro"), 1,1);
+            world.addEntity(p);
+            p.scheduleActions(scheduler, world, imageStore);
+        }
     }
 
     private Background createDefaultBackground(ImageStore imageStore) {

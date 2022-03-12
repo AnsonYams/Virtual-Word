@@ -16,7 +16,7 @@ public abstract class Dude extends Trackers {
     protected boolean transformGhost(WorldModel world,
                                      EventScheduler scheduler,
                                      ImageStore imageStore) {
-        Ghost ghost = Factory.createGhost(Functions.GHOST_KEY, this.getPosition(), imageStore.getImageList(Functions.GHOST_KEY), getActionPeriod(), getAnimationPeriod());
+        Ghost ghost = Factory.createGhost(Functions.GHOST_KEY, this.getPosition(), imageStore.getImageList(Functions.GHOST_KEY), world.getDUDE_ACTION_PERIOD(), world.getDUDE_ANIMATION_PERIOD());
         world.removeEntity(this);
         scheduler.unscheduleAllEvents(this);
         world.addEntity(ghost);
@@ -24,9 +24,6 @@ public abstract class Dude extends Trackers {
         return true;
     }
 
-    public void transformGhost_helper(WorldModel world, boolean shouldRun) {
-
-    }
     protected int getResourceLimit() {
         return resourceLimit;
     }

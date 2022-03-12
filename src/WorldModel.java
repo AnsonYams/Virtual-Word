@@ -182,7 +182,7 @@ public final class WorldModel
         }
     }
 
-    private int distanceSquared(Point p1, Point p2) {
+    public int distanceSquared(Point p1, Point p2) {
         int deltaX = p1.x - p2.x;
         int deltaY = p1.y - p2.y;
 
@@ -218,39 +218,32 @@ public final class WorldModel
             setOccupancyCell( pos, null);
         }
     }
-    public void tryAddEntity(Entity entity) {
-        if(entity.getClass() == Fire.class)
-        {
-            if(isOccupied( entity.getPosition()))
-            {
+    public boolean tryAddEntity(Entity entity) {
+        if(entity.getClass() == Fire.class) {
+            if (isOccupied(entity.getPosition())) {
                 Entity e = getOccupancyCell(entity.getPosition());
-                if(e.getClass() == Tree.class || e.getClass() == Sapling.class || e.getClass() == Stump.class)
-                {
+                if (e.getClass() == Tree.class || e.getClass() == Sapling.class || e.getClass() == Stump.class) {
                     removeEntity(e);
                     addEntity(entity);
+                    return true;
                 }
-                else if(e.getClass() == DudeNotFull.class || e.getClass() == DudeFull.class)
-                {
-                    Dude d = (Dude) e;
-                    d.transformGhost_helper(this,true);
-                }
-
+                else{return false;}
             }
-            else{
-                addEntity(entity);
-                }
         }
-        else if (isOccupied( entity.getPosition()) ) {
-            // arguably the wrong type of exception, but we are not
-            // defining our own exceptions yet
-            throw new IllegalArgumentException("position occupied");
+        if(entity.getClass() == Goomab.class)
+        {
+            if (!isOccupied(entity.getPosition()))
+            {
+                addEntity(entity);
+                return true;
+            }
+            else{return false;}
         }
         else {
             addEntity(entity);
+            return true;
         }
     }
-
-
 
     public int getNumRows() {
         return numRows;

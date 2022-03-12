@@ -25,18 +25,27 @@ public class Goomab extends Trackers{
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> target =
-                world.findNearest(getPosition(), new ArrayList<>(Arrays.asList(DudeNotFull.class)));
+        Optional<Entity> notFull =
+                world.findNearest(getPosition(), new ArrayList<>(List.of(DudeNotFull.class)));
+        Optional<Entity> full =
+                world.findNearest(getPosition(), new ArrayList<>(List.of(DudeFull.class)));
+        if(notFull.isPresent() && full.isPresent()) {
+            if (world.distanceSquared(getPosition(), notFull.get().getPosition()) > world.distanceSquared(getPosition(), full.get().getPosition())) {
+                if (moveTo(world, full.get(), scheduler)) {
+                    ((Dude) full.get()).transformGhost(world, scheduler, imageStore);
+                    world.removeEntity(full.get());
+                    scheduler.unscheduleAllEvents(full.get());
+                }
+            } else {
+                Point tgtPos = notFull.get().getPosition();
+                if (moveTo(world, notFull.get(), scheduler)) {
 
-        if (target.isPresent()) {
-            Point tgtPos = target.get().getPosition();
-
-            if (moveTo( world, target.get(), scheduler)) {
-                world.removeEntity(target.get());
-                scheduler.unscheduleAllEvents(target.get());
+                    ((Dude) notFull.get()).transformGhost(world, scheduler, imageStore);
+                    world.removeEntity(notFull.get());
+                    scheduler.unscheduleAllEvents(notFull.get());
+                }
             }
         }
-
         scheduler.scheduleEvent( this,
                 Factory.createActivityAction(this,world, imageStore),
                 getActionPeriod());

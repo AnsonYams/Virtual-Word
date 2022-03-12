@@ -31,9 +31,11 @@ public class Ghost extends Trackers{
             Point tgtPos = target.get().getPosition();
 
             if (moveTo( world, target.get(), scheduler)) {
-                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), tgtPos,100,100,world.getDUDE_LIMIT(),
+                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), tgtPos,world.getDUDE_ACTION_PERIOD(),world.getDUDE_ACTION_PERIOD(),world.getDUDE_LIMIT(),
                         imageStore.getImageList(Functions.getDudeKey()));
 
+                world.removeEntity(this);
+                scheduler.unscheduleAllEvents(this);
                 world.addEntity(dude);
                 dude.scheduleActions(scheduler, world, imageStore);
             }

@@ -97,12 +97,17 @@ public final class VirtualWorld extends PApplet
 
         for (Point p: points) {
             Fire.spreadFre(world, imageStore, scheduler, p);
+            if(world.getOccupancyCell(p).getClass() == DudeNotFull.class || world.getOccupancyCell(p).getClass() == DudeFull.class )
+            {
+                Dude d = (Dude) world.getOccupancyCell(p);
+                d.transformGhost(world, scheduler, imageStore);
+            }
             //world.setBackground();
         }
 
-        Goomab g = Factory.createGoomab(Functions.GOOMAB_KEY, pressed, imageStore.getImageList(Functions.GOOMAB_KEY), 100, 100);
-        world.tryAddEntity(g);
-        g.scheduleActions(scheduler, world, imageStore);
+        Goomab g = Factory.createGoomab(Functions.GOOMAB_KEY, pressed, imageStore.getImageList(Functions.GOOMAB_KEY), 10, 5);
+        boolean canAdd = world.tryAddEntity(g);
+        if(canAdd)g.scheduleActions(scheduler, world, imageStore);
 
         Optional<Entity> entityOptional = world.getOccupant(pressed);
         if (entityOptional.isPresent())

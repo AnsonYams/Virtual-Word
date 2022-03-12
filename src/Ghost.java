@@ -14,7 +14,7 @@ public class Ghost extends Trackers{
     @Override
     protected boolean _nextPosition(WorldModel world, Point p) {
         return world.withinBounds(p) &&
-                !world.isOccupied( p) || (world.withinBounds(p) && world.isOccupied( p) && ((Entity)(world.getOccupancyCell(p))).getClass() == Fire.class);
+                (!world.isOccupied( p) ||   world.isOccupied( p) && ((world.getOccupancyCell(p))).getClass() == Fire.class);
     }
 
     @Override
@@ -31,13 +31,13 @@ public class Ghost extends Trackers{
             Point tgtPos = target.get().getPosition();
 
             if (moveTo( world, target.get(), scheduler)) {
-                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), tgtPos,world.getDUDE_ACTION_PERIOD(),world.getDUDE_ANIMATION_PERIOD(),world.getDUDE_LIMIT(),
+                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), this.getPosition(),world.getDUDE_ACTION_PERIOD(),world.getDUDE_ANIMATION_PERIOD(),world.getDUDE_LIMIT(),
                         imageStore.getImageList(Functions.getDudeKey()));
 
                 world.removeEntity(this);
                 scheduler.unscheduleAllEvents(this);
-                world.addEntity(dude);
-                dude.scheduleActions(scheduler, world, imageStore);
+                boolean canAdd = world.tryAddEntity(dude);
+                if(canAdd){dude.scheduleActions(scheduler, world, imageStore);};
             }
         }
 

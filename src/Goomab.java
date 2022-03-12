@@ -15,7 +15,7 @@ public class Goomab extends Trackers{
     @Override
     protected  boolean _nextPosition(WorldModel world, Point p){
         return world.withinBounds(p) &&
-                !world.isOccupied( p) || (world.withinBounds(p) && world.isOccupied( p) && ((Entity)(world.getOccupancyCell(p))).getClass() == Fire.class);
+                (!world.isOccupied( p) ||  world.isOccupied( p) && ((Entity)(world.getOccupancyCell(p))).getClass() == Fire.class);
     }
 
     @Override
@@ -25,27 +25,19 @@ public class Goomab extends Trackers{
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> notFull =
-                world.findNearest(getPosition(), new ArrayList<>(List.of(DudeNotFull.class)));
         Optional<Entity> full =
                 world.findNearest(getPosition(), new ArrayList<>(List.of(DudeFull.class)));
-        if(notFull.isPresent() && full.isPresent()) {
-            if (world.distanceSquared(getPosition(), notFull.get().getPosition()) > world.distanceSquared(getPosition(), full.get().getPosition())) {
-                if (moveTo(world, full.get(), scheduler)) {
-                    ((Dude) full.get()).transformGhost(world, scheduler, imageStore);
-                    world.removeEntity(full.get());
-                    scheduler.unscheduleAllEvents(full.get());
-                }
-            } else {
-                Point tgtPos = notFull.get().getPosition();
-                if (moveTo(world, notFull.get(), scheduler)) {
-
-                    ((Dude) notFull.get()).transformGhost(world, scheduler, imageStore);
-                    world.removeEntity(notFull.get());
-                    scheduler.unscheduleAllEvents(notFull.get());
-                }
+        if(full.isPresent())
+        {
+            DudeFull df = (DudeFull) full.get();
+            Point tgtPos = df.getPosition();
+            if (moveTo(world, df, scheduler)) {
+                df.transformGhost(world, scheduler, imageStore);
+                world.removeEntity(df);
+                scheduler.unscheduleAllEvents(df);
             }
         }
+
         scheduler.scheduleEvent( this,
                 Factory.createActivityAction(this,world, imageStore),
                 getActionPeriod());

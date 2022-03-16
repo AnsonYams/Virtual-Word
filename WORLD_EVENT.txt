@@ -1,0 +1,27 @@
+﻿1. On a Mouse click
+   1. A ring of fire will spawn with a Goomab in the middle (3x3).If a tree, stump, or sapling is within the area of effect, they will be replaced with fire or the goomab in the center. If a house, fairy, obstacle, is within the aoe, they will not be replaced. All tiles that are replaced will changed to the scorched texture. If a dude of any type is within the aoe, it will turn to a ghost.
+2. When “p” is pressed
+   1. A Fluffy will spawn in the top left corner. There can only be 1 Fluffy at a time. The Fluffy will chase after Goomabs and has a 1% chance to plant a sapling as it chases after the Goomab. If there is no Goomab present, the Fluffy will walk and stay at the nearest house. While returning to a house or stationary, no saplings are planted.
+3. New entities
+   1. Ghost: Chase Fairies
+      1. Appears when Goomb eats a DudeFull or when a Dude is in the radius of the (3x3) click zone
+      2. If it touches a Fairy, it will transform into a DudeNotFull
+   2. Fluffy: Chase Goombas
+      1. Appears when “p” is pressed
+      2. Has a small chance to spawn a sapling as it chases the Goomab
+      3. Chases and eats any goomab’s on the map.
+      4. If there are no goomab’s, it will return to the nearest house.
+   3. Goomab: Chase DudeFull
+      1. Appears on click
+      2. If it eats a DudeFull, it transforms the DudeFull into a Ghost
+   4. Fire: Obstacle for Dudes
+      1. Aesthetic effect
+      2. Has a 5% chance to disappear every time it exectures a command.
+      3. Can be walked over by non-dudes.
+4. Who did what
+   1. Anson Yamvinij
+      1. Created actions for the Goomab, Ghosts, click event
+      2. Updated the dude classes
+   2. Darren Hartono
+      1. Created all new entity sprites and animations
+      2. Created actions for fluffy and fire

@@ -16,9 +16,9 @@ public abstract class Dude extends Trackers {
     protected boolean transformGhost(WorldModel world,
                                      EventScheduler scheduler,
                                      ImageStore imageStore) {
-        Ghost ghost = Factory.createGhost(Functions.GHOST_KEY, this.getPosition(), imageStore.getImageList(Functions.GHOST_KEY), world.getDUDE_ACTION_PERIOD(), world.getDUDE_ANIMATION_PERIOD());
-        world.removeEntity(this);
+        Ghost ghost = Factory.createGhost(Functions.GHOST_KEY, this.getPosition(), imageStore.getImageList(Functions.GHOST_KEY), 10, 5);
         scheduler.unscheduleAllEvents(this);
+        world.removeEntity(this);
         boolean canAdd = world.tryAddEntity(ghost);
         if(canAdd)ghost.scheduleActions(scheduler, world, imageStore);
         return true;

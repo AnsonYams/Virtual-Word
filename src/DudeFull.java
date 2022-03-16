@@ -34,7 +34,6 @@ public class DudeFull extends Dude{
             return true;
     }
 
-
     public void executeActivity(WorldModel world,
                                 ImageStore imageStore,
                                 EventScheduler scheduler)

@@ -32,8 +32,8 @@ public class Goomab extends Trackers{
             DudeFull df = (DudeFull) full.get();
             if (moveTo(world, df, scheduler)) {
                 df.transformGhost(world, scheduler, imageStore);
-                world.removeEntity(df);
                 scheduler.unscheduleAllEvents(df);
+                world.removeEntity(df);
             }
         }
 

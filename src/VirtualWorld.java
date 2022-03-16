@@ -95,10 +95,19 @@ public final class VirtualWorld extends PApplet
 
         for (Point p: points) {
             Fire.spreadFre(world, imageStore, scheduler, p);
-            if(world.withinBounds(p) && (world.getOccupancyCell(p).getClass() == DudeNotFull.class || world.getOccupancyCell(p).getClass() == DudeFull.class))
+            if(world.withinBounds(p) && world.getOccupancyCell(p).getClass() == DudeNotFull.class )
             {
-                Dude d = (Dude) world.getOccupancyCell(p);
+                DudeNotFull d = (DudeNotFull) world.getOccupancyCell(p);
                 d.transformGhost(world, scheduler, imageStore);
+                world.removeEntity(d);
+                scheduler.unscheduleAllEvents(d);
+            }
+            else if(world.withinBounds(p) && world.getOccupancyCell(p).getClass() == DudeFull.class )
+            {
+                DudeFull d = (DudeFull) world.getOccupancyCell(p);
+                d.transformGhost(world, scheduler, imageStore);
+                world.removeEntity(d);
+                scheduler.unscheduleAllEvents(d);
             }
             if (world.withinBounds(p) && world.getOccupancyCell(p).getClass() != Obstacle.class) {
                 world.setBackground(p, new Background("yes", imageStore.getImageList("background")));

@@ -28,16 +28,13 @@ public class Ghost extends Trackers{
                 world.findNearest(getPosition(), new ArrayList<>(Arrays.asList(Fairy.class)));
 
         if (target.isPresent()) {
-            Point tgtPos = target.get().getPosition();
-
             if (moveTo( world, target.get(), scheduler)) {
-                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), this.getPosition(),world.getDUDE_ACTION_PERIOD(),world.getDUDE_ANIMATION_PERIOD(),world.getDUDE_LIMIT(),
+                DudeNotFull dude = Factory.createDudeNotFull("dude_" + getId(), this.getPosition(),787,100,world.getDUDE_LIMIT(),
                         imageStore.getImageList(Functions.getDudeKey()));
-
-                world.removeEntity(this);
                 scheduler.unscheduleAllEvents(this);
+                world.removeEntity(this);
                 boolean canAdd = world.tryAddEntity(dude);
-                if(canAdd){dude.scheduleActions(scheduler, world, imageStore);};
+                if(canAdd){dude.scheduleActions(scheduler, world, imageStore);}
             }
         }
 
